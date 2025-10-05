@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>RESCUE-The Blood Heros Community</title>
+<title>RESCUES-The Blood Heros Community</title>
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -55,7 +55,8 @@
   .muted{color:var(--muted);font-size:13px}
   .small{font-size:12px}
   
-  /* Loading Screen (Updated for CORNER) */
+  /* ===== INTRO STYLES ===== */
+/* Loading Screen (Updated for CORNER) */
   #loadingScreen {
     position: fixed;
     inset: 0;
@@ -85,6 +86,7 @@
   #squidIntro .letter:nth-child(4){ animation-delay: 0.6s; }
   #squidIntro .letter:nth-child(5){ animation-delay: 0.8s; }
   #squidIntro .letter:nth-child(6){ animation-delay: 1.0s; } /* New delay for the 6th letter 'R' */
+  #squidIntro .letter:nth-child(7){ animation-delay: 1.2s; } /* New felay for the 7th letter 'S' */
   @keyframes riseUp {
     0%   { opacity: 0; transform: scale(0.5) translateY(60px) rotate(-8deg); }
     60%  { opacity: 1; transform: scale(1.2) translateY(0) rotate(3deg); }
@@ -95,11 +97,11 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 14px;
+    font-size: 17px;
     color: #aaa;
     opacity: 0;
     animation: fadeIn 1s ease forwards;
-    animation-delay: 1.2s;
+    animation-delay: 1.0s;
   }
   @keyframes fadeIn {
     from {opacity: 0;}
@@ -113,14 +115,13 @@
 */
 #loadingSubtitle {
     margin-top: 10px; /* CORNER থেকে একটু নিচে নামানোর জন্য */
-    font-size: 16px; 
+    font-size: 13px; 
     font-weight: 300;
-    color: #a43; /* #loadingFrom এর মতো একই রঙ ব্যবহার করা হলো */
+    color: #a4fff3; /* #loadingFrom এর মতো একই রঙ ব্যবহার করা হলো */
     opacity: 0;
     animation: fadeIn 1s ease forwards;
-    animation-delay: 1.2s; /* CORNER এর অ্যানিমেশন শেষ হওয়ার পরপরই এটি ফেড ইন হবে */
+    animation-delay: 1.8s; /* CORNER এর অ্যানিমেশন শেষ হওয়ার পরপরই এটি ফেড ইন হবে */
 }
-
   /* Header (Unchanged) */
   header.app-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:rgba(7, 16, 34, 0.8);border-bottom:1px solid var(--glass-border);z-index:30; backdrop-filter: blur(6px);}
   .light-mode header.app-header{background:rgba(243, 244, 246, 0.9); border-bottom:1px solid rgba(0,0,0,0.1);}
@@ -193,7 +194,18 @@
       border-radius: 6px;
       background: rgba(0, 0, 0, 0.2);
   }
-
+  /* New emergency icon pulse effect */
+  @keyframes emergency-pulse {
+      0%, 100% {
+          color: #ef4444; /* Red */
+      }
+      50% {
+          color: #f59e0b; /* Yellow */
+      }
+  }
+  .nav-btn.has-emergency svg {
+      animation: emergency-pulse 1s infinite;
+  }
   /* Add Page (Unchanged) */
   .add-center{display:flex;align-items:center;justify-content:center;height:60vh;flex-direction:column}
   
@@ -679,6 +691,7 @@
         </div>
     </div>
 </div>
+<!-- ===== NEW INTRO OVERLAY (REPLACE OLD loadingScreen) ===== -->
 <div id="loadingScreen">
   <div id="squidIntro">
     <span class="letter">R</span>
@@ -687,9 +700,10 @@
     <span class="letter">C</span>
     <span class="letter">U</span>
     <span class="letter">E</span>
+    <span class="letter">S</span>
   </div>
   
-  <div id="loadingSubtitle">Rapid Emergency Support & Critical Urgent Effort</div>
+  <div id="loadingSubtitle"><h3>Responding Every Second, Caring Until Every Survival</h3></div>
   
   <div id="loadingFrom">from Appozi</div>
 </div>
@@ -698,7 +712,7 @@
     <div class="brand" aria-hidden="false" onclick="scrollToTop()">
       <div class="drop">🩸</div>
       <div>
-        <h1 id="brandTitle">RESCUE</h1>
+        <h1 id="brandTitle">RESCUES</h1>
         <div class="muted small" id="brandSubtitle">রক্তের সহায়তা</div>
       </div>
     </div>
@@ -856,7 +870,7 @@
   <div class="calendar-container">
     <div class="calendar-header">
       <button id="prevMonthBtn">‹</button>
-      <h4 id="calendarMonthYear">RESCUE Calendar - </h4>
+      <h4 id="calendarMonthYear">RESCUES Calendar - </h4>
       <button id="nextMonthBtn">›</button>
     </div>
     <div class="calendar-grid" id="calendarGrid"></div>
@@ -1221,7 +1235,7 @@ navProfile.addEventListener('click', () => {
 setTimeout(()=> {
   loadingScreen.style.opacity = 0;
   setTimeout(()=> { loadingScreen.style.display='none'; app.style.display='block'; app.setAttribute('aria-hidden','false'); }, 220);
-}, 2300);
+}, 4300);
 
 firebase.auth().onAuthStateChanged(user => {
   if (user) {
@@ -1870,7 +1884,7 @@ function showAuthTab(tab){
           <button class="btn ghost" style="width: 100%;" onclick="showAuthTab('login')">Have A Account? Login Now</button>
         </div>
       </div>`;
-    document.getElementById('openTnC').addEventListener('click', (e)=>{ e.preventDefault(); openModal(`<h3>Terms & Conditions</h3><div class="muted">📜 Terms & Conditions (T&C) – Blood App  
+    document.getElementById('openTnC').addEventListener('click', (e)=>{ e.preventDefault(); openModal(`<h3>Terms & Conditions</h3><div class="muted">📜 Terms & Conditions (T&C) – RESCUES  
 <div>1. **Eligibility** - ব্যবহারকারীকে অবশ্যই ন্যূনতম 18 বছর বয়সী হতে হবে।  
    - সঠিক স্বাস্থ্যগত অবস্থায় না থাকলে দান করা যাবে না।  </div>
 <div>2. **Accuracy of Information** - ব্যবহারকারী যে তথ্য প্রদান করবে (নাম, বয়স, রক্তের গ্রুপ, যোগাযোগের তথ্য ইত্যাদি) তা অবশ্যই সঠিক হতে হবে।  
@@ -1903,7 +1917,8 @@ function showAuthTab(tab){
     c.innerHTML = `
       <div class="auth-form-container">
         <h3>Login</h3>
-        <p class="muted" style="text-align: center;">আমরা জানতাম আপনি খুব শীগ্রই ফিরে আসবেন ,অ্যাকাউন্টে প্রবেশ করুন</p>
+        <p class="muted" style="text-align: center;">আমরা জানতাম আপনি খুব শীগ্রই ফিরে আসবেন</p>
+<p> অ্যাকাউন্টে প্রবেশ করুন</p>
         <div class="input-group"><label>Email</label><input id="loginEmail" type="email" placeholder="example@mail.com" /></div>
         
         <div class="input-group">
@@ -2041,7 +2056,7 @@ function renderCalendar() {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
     
     calendarMonthYear.textContent = new Date(year, month).toLocaleString('en-US', { month: 'long', year: 'numeric' });
-    calendarMonthYear.prepend("Blood Calendar - ");
+    calendarMonthYear.prepend("RESCUES Calendar - ");
 
     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     daysOfWeek.forEach(day => {
@@ -2258,13 +2273,13 @@ function openEditProfile(){
 aboutBtn.addEventListener('click', ()=> { 
   closeMenuFunc(); 
   openModal(`
-    <h3>About RESCUE</h3>
+    <h3>About RESCUES</h3>
     <div class="muted">
-      RESCUE  অ্যাপটি তৈরি করা হয়েছে রক্তদাতা ও রক্ত প্রয়োজনদের মধ্যে একটি সহজ ও দ্রুত সংযোগ স্থাপনের জন্য। 
+      RESCUES  অ্যাপটি তৈরি করা হয়েছে রক্তদাতা ও রক্ত প্রয়োজনদের মধ্যে একটি সহজ ও দ্রুত সংযোগ স্থাপনের জন্য। 
       এখানে আপনি রক্তদাতাদের তালিকা দেখতে, রেটিং দিতে, কমেন্ট করতে এবং নতুন ডোনার রেজিস্টার করতে পারবেন। 
       এটি বিশেষভাবে মোবাইল ফ্রেন্ডলি এবং ইউজার-ফ্রেন্ডলি ডিজাইন করা হয়েছে। 
       উদ্দেশ্য হলো সময়মতো রক্তের প্রয়োজনীয়তা মেটানো এবং রক্তদাতাদের সাথে সহজ যোগাযোগ নিশ্চিত করা।
-      <h2> <a> RESCUE Team </a> কোনো প্রকার আর্থিক লেনদেন সাপোর্ট করে না, সুতরাং অর্থ লেনদেন এড়িয়ে চলুন </h2>
+      <h2> <a> RESCUES Team </a> কোনো প্রকার আর্থিক লেনদেন সাপোর্ট করে না, সুতরাং অর্থ লেনদেন এড়িয়ে চলুন </h2>
     </div>
     <div style="display:flex;justify-content:flex-end;margin-top:8px">
       <button class="btn ghost" onclick="closeModal()">Close</button>
@@ -2352,26 +2367,26 @@ function loadAndRenderDonors() {
         donorsGrid.innerHTML = '';
         const arr = Object.values(donors || {}).sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
         
-        if (latestEmergencyPost) {
-            const postEl = document.createElement('div');
-            postEl.className = 'emergency-card';
-            postEl.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <h3 style="margin: 0; color: white;">🚨 জরুরি রক্তের প্রয়োজন!</h3>
-                    <div class="blood-group-large">${latestEmergencyPost.blood}</div>
-                </div>
-                <p style="margin: 0; font-size: 16px;">
-                    <span style="font-weight: 600;">রোগী:</span> ${escapeHtml(latestEmergencyPost.patientName)}<br>
-                    	<span style="front-weight: 600;">রোগীর ঠিকানা:</span> ${escapeHtml(latesEmergencyPost.patientaddress)}<br>
-                    <span style="font-weight: 600;">বিস্তারিত:</span> ${escapeHtml(latestEmergencyPost.details)}
-                </p>
-                <div style="margin-top: 12px; display: flex; justify-content: space-between; align-items: center;">
-                        <a href="tel:${encodeURIComponent(latestEmergencyPost.phone)}" class="btn ghost" style="color: white; border-color: rgba(255,255,255,0.4);">যোগাযোগ করুন</a>
-                        <div style="font-size: 12px; opacity: 0.7;">পোস্ট করেছেন: ${users[latestEmergencyPost.user] ? users[latestEmergencyPost.user].name : 'Unknown User'}</div>
-                    </div>
-            `;
-            donorsGrid.appendChild(postEl);
-        }
+if (latestEmergencyPost) {
+  const postEl = document.createElement("div");
+  postEl.className = "emergency-card";
+  postEl.innerHTML = `
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+      <h3 style="margin: 0; color: white;">🚨 জরুরি রক্তের প্রয়োজন!</h3>
+      <div class="blood-group-large">${escapeHtml(latestEmergencyPost.blood || "")}</div>
+    </div>
+    <p style="margin: 0; font-size: 16px;">
+      <span style="font-weight: 600;">রোগী:</span> ${escapeHtml(latestEmergencyPost.patientName || latestEmergencyPost.patientname || "")}<br>
+      <span style="font-weight: 600;">রোগীর ঠিকানা:</span> ${escapeHtml(latestEmergencyPost.patientAddress || latestEmergencyPost.patientaddress || "")}<br>
+      <span style="font-weight: 600;">বিস্তারিত:</span> ${escapeHtml(latestEmergencyPost.details || "")}
+    </p>
+    <div style="margin-top: 12px; display: flex; justify-content: space-between; align-items: center;">
+      <a href="tel:${encodeURIComponent(latestEmergencyPost.phone || "")}" class="btn ghost" style="color: white; border-color: rgba(255,255,255,0.4);">যোগাযোগ করুন</a>
+      <div style="font-size: 12px; opacity: 0.7;">পোস্ট করেছেন: ${users[latestEmergencyPost.user] ? users[latestEmergencyPost.user].name : "Unknown User"}</div>
+    </div>
+  `;
+  donorsGrid.appendChild(postEl);
+}
 
         if (arr.length === 0) {
             if (currentUser) {
